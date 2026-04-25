@@ -1,0 +1,5 @@
+{
+  "title": "Building for the Terminal",
+  "description": "A practical guide to creating developer tools and terminal-first applications. From CLI architecture to TUI design patterns, this book covers everything you need to build tools developers love.",
+  "chapters": ["01-intro", "02-cli-architecture"]
+}

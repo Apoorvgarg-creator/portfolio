@@ -1,0 +1,37 @@
+---
+title: "Chapter 1: Introduction"
+order: 1
+---
+
+# Why the Terminal?
+
+The terminal is where developers live. It's fast, composable, and distraction-free. Yet most modern tools ignore it in favor of bloated GUIs.
+
+This book is about building tools that feel **native** to the terminal — tools that respect the developer's workflow and integrate seamlessly with the Unix philosophy.
+
+## What You'll Learn
+
+- **CLI Architecture** — How to structure commands, flags, and arguments
+- **TUI Design** — Building interactive text-based interfaces
+- **Developer Experience** — Making tools that developers actually want to use
+- **Distribution** — Getting your tool into the hands of users
+
+## Prerequisites
+
+You should be comfortable with:
+
+```typescript
+// Basic TypeScript
+interface Config {
+  name: string;
+  version: string;
+  commands: Command[];
+}
+
+function loadConfig(path: string): Config {
+  const raw = readFileSync(path, "utf-8");
+  return JSON.parse(raw);
+}
+```
+
+Let's get started.

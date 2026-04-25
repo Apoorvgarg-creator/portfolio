@@ -1,0 +1,39 @@
+---
+title: "Building a Terminal-Themed Portfolio"
+date: "2024-06-01"
+description: "How I built my portfolio website with a terminal/hacker aesthetic using Next.js, Tailwind, and Framer Motion."
+tags: ["nextjs", "portfolio", "design"]
+---
+
+# Building a Terminal-Themed Portfolio
+
+I've always loved the terminal. The blinking cursor, the monospace font, the feeling of direct control. So when it came time to build my portfolio, I knew I wanted it to feel like a terminal.
+
+## The Stack
+
+- **Next.js 14** with App Router for the framework
+- **Tailwind CSS** for styling with a custom terminal theme
+- **Framer Motion** for typewriter animations and scroll reveals
+- **MDX** for blog posts and book chapters
+
+## CRT Effects
+
+The scanline overlay is pure CSS — a repeating linear gradient that creates thin horizontal lines:
+
+```css
+.crt-overlay {
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0) 0px,
+    rgba(0, 0, 0, 0) 1px,
+    rgba(0, 0, 0, 0.08) 1px,
+    rgba(0, 0, 0, 0.08) 2px
+  );
+}
+```
+
+Combined with a vignette and noise texture, it gives the whole page a retro CRT monitor feel.
+
+## What's Next
+
+I'm planning to add an interactive shell Easter egg where visitors can type commands. Stay tuned.

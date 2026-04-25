@@ -2,26 +2,195 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── Base ────────────────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #000000;
+  --text: #e0e0e0;
+  --green: #00ff41;
+  --amber: #ffb000;
+  --dim: #555555;
+  --border: #333333;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--text);
+  background: var(--bg);
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+::selection {
+  background: var(--green);
+  color: #000000;
+}
+
+/* ── CRT Scanline Overlay ────────────────────── */
+.crt-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0) 0px,
+    rgba(0, 0, 0, 0) 1px,
+    rgba(0, 0, 0, 0.08) 1px,
+    rgba(0, 0, 0, 0.08) 2px
+  );
+}
+
+/* ── CRT Vignette ────────────────────────────── */
+.crt-vignette {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9998;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 60%,
+    rgba(0, 0, 0, 0.6) 100%
+  );
+}
+
+/* ── Noise texture ───────────────────────────── */
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9997;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.5'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+/* ── Scrollbar ───────────────────────────────── */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333333;
+  border-radius: 0;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #00ff41;
+}
+
+/* ── Terminal text glow ──────────────────────── */
+.text-glow {
+  text-shadow: 0 0 5px rgba(0, 255, 65, 0.4);
+}
+
+.text-glow-strong {
+  text-shadow: 0 0 10px rgba(0, 255, 65, 0.6), 0 0 20px rgba(0, 255, 65, 0.3);
+}
+
+/* ── Glitch effect ───────────────────────────── */
+.glitch-container {
+  position: relative;
+}
+
+.glitch-container:hover .glitch-clone-1,
+.glitch-container:hover .glitch-clone-2 {
+  display: block;
+}
+
+.glitch-clone-1,
+.glitch-clone-2 {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.glitch-clone-1 {
+  color: #ff0000;
+  animation: glitch-1 2s infinite linear alternate-reverse;
+  left: 2px;
+}
+
+.glitch-clone-2 {
+  color: #0000ff;
+  animation: glitch-2 3s infinite linear alternate-reverse;
+  left: -2px;
+}
+
+@keyframes glitch-1 {
+  0% { clip-path: inset(20% 0 60% 0); }
+  20% { clip-path: inset(60% 0 1% 0); }
+  40% { clip-path: inset(43% 0 1% 0); }
+  60% { clip-path: inset(25% 0 58% 0); }
+  80% { clip-path: inset(54% 0 7% 0); }
+  100% { clip-path: inset(58% 0 43% 0); }
+}
+
+@keyframes glitch-2 {
+  0% { clip-path: inset(65% 0 13% 0); }
+  20% { clip-path: inset(79% 0 1% 0); }
+  40% { clip-path: inset(48% 0 30% 0); }
+  60% { clip-path: inset(10% 0 60% 0); }
+  80% { clip-path: inset(30% 0 30% 0); }
+  100% { clip-path: inset(10% 0 70% 0); }
+}
+
+/* ── Code blocks (rehype-pretty-code) ────────── */
+[data-rehype-pretty-code-figure] pre {
+  @apply bg-terminal-black border border-terminal-border rounded-none p-4 overflow-x-auto;
+}
+
+[data-rehype-pretty-code-figure] code {
+  @apply text-sm;
+  counter-reset: line;
+}
+
+[data-rehype-pretty-code-figure] code > [data-line]::before {
+  counter-increment: line;
+  content: counter(line);
+  @apply inline-block w-8 mr-4 text-right text-terminal-dim;
+}
+
+/* ── Prose overrides for MDX ─────────────────── */
+.prose {
+  --tw-prose-body: #e0e0e0;
+  --tw-prose-headings: #00ff41;
+  --tw-prose-links: #00ff41;
+  --tw-prose-bold: #e0e0e0;
+  --tw-prose-code: #00ff41;
+  --tw-prose-pre-bg: #000000;
+  --tw-prose-pre-code: #e0e0e0;
+  --tw-prose-quotes: #e0e0e0;
+  --tw-prose-quote-borders: #00ff41;
+  --tw-prose-counters: #555555;
+  --tw-prose-bullets: #00ff41;
+  --tw-prose-hr: #333333;
+  --tw-prose-th-borders: #333333;
+  --tw-prose-td-borders: #333333;
+}
+
+/* ── Reduced motion ──────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  .crt-overlay,
+  .noise-overlay {
+    display: none;
   }
 }

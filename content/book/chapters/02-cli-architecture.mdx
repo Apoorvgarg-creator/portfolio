@@ -1,0 +1,58 @@
+---
+title: "Chapter 2: CLI Architecture"
+order: 2
+---
+
+# Designing a CLI
+
+Every great CLI starts with a clear command structure. Users should be able to guess what a command does before reading the docs.
+
+## Command Patterns
+
+The most common pattern is the **verb-noun** structure:
+
+```bash
+tool create project
+tool deploy service
+tool list configs
+```
+
+## Parsing Arguments
+
+A robust argument parser is the backbone of any CLI:
+
+```typescript
+interface ParsedArgs {
+  command: string;
+  positional: string[];
+  flags: Record<string, string | boolean>;
+}
+
+function parseArgs(argv: string[]): ParsedArgs {
+  const [command, ...rest] = argv.slice(2);
+  const positional: string[] = [];
+  const flags: Record<string, string | boolean> = {};
+
+  for (let i = 0; i < rest.length; i++) {
+    const arg = rest[i];
+    if (arg.startsWith("--")) {
+      const key = arg.slice(2);
+      const next = rest[i + 1];
+      if (next && !next.startsWith("--")) {
+        flags[key] = next;
+        i++;
+      } else {
+        flags[key] = true;
+      }
+    } else {
+      positional.push(arg);
+    }
+  }
+
+  return { command, positional, flags };
+}
+```
+
+## Exit Codes
+
+Always use meaningful exit codes — `0` for success, `1` for general errors, `2` for usage errors.

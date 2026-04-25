@@ -1,0 +1,61 @@
+[
+  {
+    "name": "go-logql",
+    "description": "Go package to programmatically build Loki LogQL queries — type-safe query builder for observability pipelines.",
+    "url": "https://github.com/Apoorvgarg-creator/go-logql",
+    "stars": 3,
+    "language": "Go",
+    "tags": ["go", "loki", "logql", "observability"]
+  },
+  {
+    "name": "dj-electric",
+    "description": "Django package to integrate the ElectricSQL sync engine — lets Django apps go local-first over Postgres.",
+    "url": "https://github.com/Apoorvgarg-creator/dj-electric",
+    "stars": 2,
+    "language": "Python",
+    "tags": ["django", "electric-sql", "local-first", "sync"]
+  },
+  {
+    "name": "lokxy",
+    "description": "Log aggregator for Loki — collects and unifies log streams from multiple sources into a single queryable endpoint.",
+    "url": "https://github.com/Apoorvgarg-creator/lokxy",
+    "language": "Go",
+    "tags": ["loki", "observability", "aggregator"]
+  },
+  {
+    "name": "observal",
+    "description": "Observability platform and marketplace for MCP servers.",
+    "url": "https://github.com/Apoorvgarg-creator/observal",
+    "language": "TypeScript",
+    "tags": ["mcp", "observability", "marketplace"]
+  },
+  {
+    "name": "drf_api_project_template",
+    "description": "Opinionated Django REST Framework project template using Domain-Driven Design and Clean Architecture.",
+    "url": "https://github.com/Apoorvgarg-creator/drf_api_project_template",
+    "language": "Python",
+    "tags": ["django", "drf", "ddd", "template"]
+  },
+  {
+    "name": "Robotics Academy",
+    "description": "Open-source robotics learning platform using ROS, Gazebo, and Rviz. GSoC contribution: migrated 26 exercises from vanilla JS to React, lifting learner retention by 50%.",
+    "url": "https://github.com/JdeRobot/RoboticsAcademy",
+    "language": "Python",
+    "tags": ["gsoc", "react", "django", "robotics"]
+  },
+  {
+    "name": "Template Creation Portal",
+    "description": "Code for GovTech project — configurable portal for government micro-improvement templates with versioning and role-based access.",
+    "url": "https://github.com/ELEVATE-Project/template-creation-portal",
+    "language": "TypeScript",
+    "tags": ["c4gt", "angular", "flask", "mongodb"]
+  },
+  {
+    "name": "AI-Image-Caption-Bot",
+    "description": "Deep-learning model that generates descriptive captions for images — applications in search, assistive tech, and autonomous driving.",
+    "url": "https://github.com/Apoorvgarg-creator/AI-Image-Caption-Bot",
+    "stars": 2,
+    "language": "Python",
+    "tags": ["ml", "tensorflow", "keras", "flask"]
+  }
+]
