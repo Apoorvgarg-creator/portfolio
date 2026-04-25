@@ -16,25 +16,11 @@
     "tags": ["django", "electric-sql", "local-first", "sync"]
   },
   {
-    "name": "lokxy",
-    "description": "Log aggregator for Loki — collects and unifies log streams from multiple sources into a single queryable endpoint.",
-    "url": "https://github.com/Apoorvgarg-creator/lokxy",
-    "language": "Go",
-    "tags": ["loki", "observability", "aggregator"]
-  },
-  {
     "name": "observal",
-    "description": "Observability platform and marketplace for MCP servers.",
+    "description": "Observability platform & marketplace for MCP servers. Contributor + community manager — shipped pip/brew install, diagnostics, playground, GitBooks docs, and import/export for vendor portability.",
     "url": "https://github.com/Apoorvgarg-creator/observal",
     "language": "TypeScript",
-    "tags": ["mcp", "observability", "marketplace"]
-  },
-  {
-    "name": "drf_api_project_template",
-    "description": "Opinionated Django REST Framework project template using Domain-Driven Design and Clean Architecture.",
-    "url": "https://github.com/Apoorvgarg-creator/drf_api_project_template",
-    "language": "Python",
-    "tags": ["django", "drf", "ddd", "template"]
+    "tags": ["mcp", "observability", "community", "no-lock-in"]
   },
   {
     "name": "Robotics Academy",

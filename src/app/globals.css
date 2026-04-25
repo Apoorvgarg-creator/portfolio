@@ -2,14 +2,88 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ── Base ────────────────────────────────────── */
+/* ── Base palette (terminal default) ─────────────── */
 :root {
-  --bg: #000000;
-  --text: #e0e0e0;
-  --green: #00ff41;
-  --amber: #ffb000;
-  --dim: #555555;
-  --border: #333333;
+  --terminal-black-rgb: 0 0 0;
+  --terminal-text-rgb: 224 224 224;
+  --terminal-green-rgb: 0 255 65;
+  --terminal-amber-rgb: 255 176 0;
+  --terminal-dim-rgb: 85 85 85;
+  --terminal-border-rgb: 51 51 51;
+  --glow-rgb: 0 255 65;
+  --scene-bg: #000000;
+
+  /* Legacy aliases — kept for any direct var() consumers */
+  --bg: rgb(var(--terminal-black-rgb));
+  --text: rgb(var(--terminal-text-rgb));
+  --green: rgb(var(--terminal-green-rgb));
+  --amber: rgb(var(--terminal-amber-rgb));
+  --dim: rgb(var(--terminal-dim-rgb));
+  --border: rgb(var(--terminal-border-rgb));
+}
+
+/* ── Seasonal palettes ───────────────────────────── */
+[data-theme="seasonal"][data-season="winter"] {
+  --terminal-black-rgb: 11 18 48;
+  --terminal-text-rgb: 232 238 247;
+  --terminal-green-rgb: 124 200 255;
+  --terminal-amber-rgb: 255 243 168;
+  --terminal-dim-rgb: 105 121 168;
+  --terminal-border-rgb: 42 53 96;
+  --glow-rgb: 124 200 255;
+  --scene-bg:
+    radial-gradient(circle at 80% 15%, rgba(255, 243, 200, 0.12) 0%, transparent 40%),
+    linear-gradient(180deg, #060a1c 0%, #0b1230 50%, #1a2455 100%);
+}
+
+[data-theme="seasonal"][data-season="spring"] {
+  --terminal-black-rgb: 255 240 246;
+  --terminal-text-rgb: 61 34 51;
+  --terminal-green-rgb: 194 53 107;
+  --terminal-amber-rgb: 86 154 86;
+  --terminal-dim-rgb: 132 95 110;
+  --terminal-border-rgb: 245 205 217;
+  --glow-rgb: 194 53 107;
+  --scene-bg: linear-gradient(180deg, #ffe4ec 0%, #fff8d6 55%, #d6f5d6 100%);
+}
+
+[data-theme="seasonal"][data-season="summer"] {
+  --terminal-black-rgb: 255 244 217;
+  --terminal-text-rgb: 58 37 17;
+  --terminal-green-rgb: 0 107 142;
+  --terminal-amber-rgb: 219 122 0;
+  --terminal-dim-rgb: 132 105 80;
+  --terminal-border-rgb: 235 200 130;
+  --glow-rgb: 0 107 142;
+  --scene-bg:
+    linear-gradient(180deg, #87ceeb 0%, #b9e3f5 35%, #f6e4a3 75%, #f4d28b 100%);
+}
+
+[data-theme="seasonal"][data-season="autumn"] {
+  --terminal-black-rgb: 58 26 14;
+  --terminal-text-rgb: 251 228 199;
+  --terminal-green-rgb: 255 119 51;
+  --terminal-amber-rgb: 252 183 91;
+  --terminal-dim-rgb: 138 91 63;
+  --terminal-border-rgb: 94 47 26;
+  --glow-rgb: 255 119 51;
+  --scene-bg: linear-gradient(180deg, #2a0e07 0%, #5a1f0c 45%, #a8431e 100%);
+}
+
+[data-theme="seasonal"][data-season="all"] {
+  --terminal-black-rgb: 247 243 255;
+  --terminal-text-rgb: 45 31 61;
+  --terminal-green-rgb: 124 92 176;
+  --terminal-amber-rgb: 232 133 84;
+  --terminal-dim-rgb: 138 122 163;
+  --terminal-border-rgb: 212 200 232;
+  --glow-rgb: 124 92 176;
+  --scene-bg:
+    radial-gradient(circle at 15% 10%, rgba(180, 210, 255, 0.4) 0%, transparent 45%),
+    radial-gradient(circle at 85% 15%, rgba(255, 215, 180, 0.4) 0%, transparent 45%),
+    radial-gradient(circle at 80% 85%, rgba(255, 200, 220, 0.35) 0%, transparent 45%),
+    radial-gradient(circle at 15% 85%, rgba(220, 200, 255, 0.4) 0%, transparent 45%),
+    linear-gradient(180deg, #f7f3ff 0%, #fff7ec 100%);
 }
 
 html {
@@ -17,13 +91,20 @@ html {
 }
 
 body {
-  color: var(--text);
-  background: var(--bg);
+  color: rgb(var(--terminal-text-rgb));
+  background: rgb(var(--terminal-black-rgb));
+}
+
+/* Seasonal mode: replace the body background with the rich scene gradient */
+html[data-theme="seasonal"] body {
+  background: var(--scene-bg) fixed;
+  background-size: cover;
+  background-attachment: fixed;
 }
 
 ::selection {
-  background: var(--green);
-  color: #000000;
+  background: rgb(var(--terminal-green-rgb));
+  color: rgb(var(--terminal-black-rgb));
 }
 
 /* ── CRT Scanline Overlay ────────────────────── */
@@ -72,28 +153,50 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #000000;
+  background: rgb(var(--terminal-black-rgb));
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #333333;
+  background: rgb(var(--terminal-border-rgb));
   border-radius: 0;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #00ff41;
+  background: rgb(var(--terminal-green-rgb));
 }
 
-/* ── Terminal text glow ──────────────────────── */
+/* ── Theme-aware text glow ───────────────────── */
 .text-glow {
-  text-shadow: 0 0 5px rgba(0, 255, 65, 0.4);
+  text-shadow: 0 0 5px rgb(var(--glow-rgb) / 0.4);
 }
 
 .text-glow-strong {
-  text-shadow: 0 0 10px rgba(0, 255, 65, 0.6), 0 0 20px rgba(0, 255, 65, 0.3);
+  text-shadow:
+    0 0 10px rgb(var(--glow-rgb) / 0.6),
+    0 0 20px rgb(var(--glow-rgb) / 0.3);
 }
 
-/* ── Glitch effect ───────────────────────────── */
+/* In seasonal mode, glow is much subtler — soft accent, not phosphor burn */
+html[data-theme="seasonal"] .text-glow {
+  text-shadow: 0 0 6px rgb(var(--glow-rgb) / 0.25);
+}
+
+html[data-theme="seasonal"] .text-glow-strong {
+  text-shadow: 0 0 10px rgb(var(--glow-rgb) / 0.35);
+}
+
+/* ASCII art uses block characters (█) that visually merge under blurred glow.
+   In seasonal mode strip the text-shadow so the letter shapes read cleanly.
+   Do NOT add letter-spacing — block characters need to butt against each
+   other to form solid letter strokes; any spacing fragments them. */
+html[data-theme="seasonal"] pre.text-glow,
+html[data-theme="seasonal"] pre.text-glow-strong,
+html[data-theme="seasonal"] pre {
+  text-shadow: none;
+  letter-spacing: 0;
+}
+
+/* ── Glitch effect (terminal flourish — kept hardcoded) ── */
 .glitch-container {
   position: relative;
 }
@@ -123,6 +226,12 @@ body {
   color: #0000ff;
   animation: glitch-2 3s infinite linear alternate-reverse;
   left: -2px;
+}
+
+/* In seasonal mode, mute the glitch RGB clones — they read as broken, not stylish */
+html[data-theme="seasonal"] .glitch-container:hover .glitch-clone-1,
+html[data-theme="seasonal"] .glitch-container:hover .glitch-clone-2 {
+  display: none;
 }
 
 @keyframes glitch-1 {
@@ -161,20 +270,83 @@ body {
 
 /* ── Prose overrides for MDX ─────────────────── */
 .prose {
-  --tw-prose-body: #e0e0e0;
-  --tw-prose-headings: #00ff41;
-  --tw-prose-links: #00ff41;
-  --tw-prose-bold: #e0e0e0;
-  --tw-prose-code: #00ff41;
-  --tw-prose-pre-bg: #000000;
-  --tw-prose-pre-code: #e0e0e0;
-  --tw-prose-quotes: #e0e0e0;
-  --tw-prose-quote-borders: #00ff41;
-  --tw-prose-counters: #555555;
-  --tw-prose-bullets: #00ff41;
-  --tw-prose-hr: #333333;
-  --tw-prose-th-borders: #333333;
-  --tw-prose-td-borders: #333333;
+  --tw-prose-body: rgb(var(--terminal-text-rgb));
+  --tw-prose-headings: rgb(var(--terminal-green-rgb));
+  --tw-prose-links: rgb(var(--terminal-green-rgb));
+  --tw-prose-bold: rgb(var(--terminal-text-rgb));
+  --tw-prose-code: rgb(var(--terminal-green-rgb));
+  --tw-prose-pre-bg: rgb(var(--terminal-black-rgb));
+  --tw-prose-pre-code: rgb(var(--terminal-text-rgb));
+  --tw-prose-quotes: rgb(var(--terminal-text-rgb));
+  --tw-prose-quote-borders: rgb(var(--terminal-green-rgb));
+  --tw-prose-counters: rgb(var(--terminal-dim-rgb));
+  --tw-prose-bullets: rgb(var(--terminal-green-rgb));
+  --tw-prose-hr: rgb(var(--terminal-border-rgb));
+  --tw-prose-th-borders: rgb(var(--terminal-border-rgb));
+  --tw-prose-td-borders: rgb(var(--terminal-border-rgb));
+}
+
+/* ── Seasonal effects keyframes ──────────────── */
+@keyframes water-drop {
+  0% {
+    transform: translate(0, 0) scale(0.4);
+    opacity: 0.9;
+  }
+  60% {
+    transform: translate(20px, 26px) scale(1);
+    opacity: 0.9;
+  }
+  100% {
+    transform: translate(34px, 56px) scale(0.6);
+    opacity: 0;
+  }
+}
+
+@keyframes splash-drip {
+  0% {
+    transform: translate(0, -8px) scaleY(0.3);
+    opacity: 0;
+  }
+  10% {
+    transform: translate(0, 0) scaleY(1.1);
+    opacity: 0.95;
+  }
+  100% {
+    transform: translate(0, 80vh) scaleY(0.4);
+    opacity: 0;
+  }
+}
+
+/* ── Seasonal scene plumbing ─────────────────── */
+.seasonal-scene-root {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  overflow: hidden;
+}
+
+.seasonal-particles {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.seasonal-mascot {
+  position: fixed;
+  bottom: 1rem;
+  left: 1rem;
+  z-index: 15;
+  pointer-events: none;
+}
+
+@media (max-width: 480px) {
+  .seasonal-mascot {
+    bottom: 0.5rem;
+    left: 0.5rem;
+  }
 }
 
 /* ── Reduced motion ──────────────────────────── */
@@ -192,5 +364,10 @@ body {
   .crt-overlay,
   .noise-overlay {
     display: none;
+  }
+
+  .seasonal-particles,
+  .seasonal-mascot__animated {
+    display: none !important;
   }
 }

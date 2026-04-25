@@ -20,6 +20,62 @@ type Role = {
 
 const ROLES: Role[] = [
   {
+    company: "Observal",
+    title: "Community Manager · Open Source Contributor",
+    dates: "2025 – Present",
+    tagline:
+      "Run the contributor community and ship platform features for Observal — the observability platform & marketplace for MCP servers. Built the install paths, diagnostics, and the no-lock-in migration story.",
+    metrics: [
+      { value: "pip + brew", label: "install paths", tone: "amber" },
+      { value: "0", label: "cloud vendor lock-in", tone: "green" },
+      { value: "Playground", label: "try before install", tone: "amber" },
+      { value: "GitBooks", label: "discoverable docs", tone: "green" },
+    ],
+    highlights: [
+      {
+        action: "Run the contributor community",
+        detail:
+          "triage GitHub Discussions, shepherd first-time contributors, drive release cadence, and keep the project responsive to its users — turning a fresh repo into a working community.",
+      },
+      {
+        action: "Shipped pip + brew install paths",
+        detail:
+          "frictionless onboarding across Python and macOS ecosystems — go from zero to running observability with one command instead of a README full of steps.",
+      },
+      {
+        action: "Built diagnostic support",
+        detail:
+          "surfaces health, configuration, and connectivity signals so users self-diagnose before opening an issue — cuts triage time and lifts first-run success rate.",
+      },
+      {
+        action: "Added a playground feature",
+        detail:
+          "try-before-install workflow that lets users explore Observal interactively without committing to a local setup — turned the docs into a hands-on demo.",
+      },
+      {
+        action: "Designed import/export for cloud-vendor migration",
+        detail:
+          "users can move state across providers without lock-in — switch vendors without losing telemetry, dashboards, or config. Direct counter to the standard observability lock-in story.",
+      },
+      {
+        action: "Authored GitBooks documentation",
+        detail:
+          "navigable, searchable docs that lowered the bar for new users and contributors — shipped alongside the product, not as an afterthought.",
+      },
+    ],
+    stack: [
+      "MCP",
+      "Observability",
+      "Python",
+      "Homebrew",
+      "pip",
+      "GitBook",
+      "Diagnostics",
+      "Open Source",
+      "Community",
+    ],
+  },
+  {
     company: "Wells Fargo",
     title: "Software Engineer",
     dates: "Aug 2023 – Aug 2025",

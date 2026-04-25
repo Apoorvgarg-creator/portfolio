@@ -7,7 +7,9 @@ import Footer from "@/components/layout/Footer";
 import CRTOverlay from "@/components/effects/CRTOverlay";
 import ClientLayout from "@/components/layout/ClientLayout";
 import InteractiveShell from "@/components/terminal/InteractiveShell";
+import SeasonalScene from "@/components/seasonal/SeasonalScene";
 import { SITE_CONFIG } from "@/lib/constants";
+import { THEME_INIT_SCRIPT } from "@/lib/theme/initScript";
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
@@ -83,7 +85,7 @@ const personJsonLd = {
   name: "Apoorv Garg",
   url: SITE_CONFIG.url,
   jobTitle: "Software Engineer",
-  email: "mailto:apoorvgarg.ms@gmail.com",
+  email: "mailto:apoorv.portfolio@gmail.com",
   image: `${SITE_CONFIG.url}/og-image.png`,
   sameAs: [
     "https://github.com/Apoorvgarg-creator",
@@ -152,7 +154,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={jetbrainsMono.variable}>
+    <html
+      lang="en"
+      className={jetbrainsMono.variable}
+      suppressHydrationWarning
+    >
+      <head>
+        <script
+          id="theme-init"
+          dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }}
+        />
+      </head>
       <body className="font-mono bg-terminal-black text-terminal-text antialiased">
         <Script
           id="ld-person"
@@ -168,10 +180,11 @@ export default function RootLayout({
         >
           {JSON.stringify(websiteJsonLd)}
         </Script>
-        <CRTOverlay />
         <ClientLayout>
+          <CRTOverlay />
+          <SeasonalScene />
           <Navbar />
-          <main className="pt-12">{children}</main>
+          <main className="pt-12 relative z-10">{children}</main>
           <Footer />
           <InteractiveShell />
         </ClientLayout>

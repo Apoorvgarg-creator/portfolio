@@ -7,8 +7,11 @@ import TerminalWindow from "@/components/terminal/TerminalWindow";
 import TypewriterText from "@/components/terminal/TypewriterText";
 import CursorBlink from "@/components/terminal/CursorBlink";
 import { ASCII_LOGO } from "@/lib/constants";
+import { useTheme } from "@/components/theme/ThemeProvider";
 
 export default function HeroSection() {
+  const { mode, mounted } = useTheme();
+  const showAscii = !mounted || mode === "terminal";
   const [step, setStep] = useState(0);
 
   const onStep0 = useCallback(() => setStep(1), []);
@@ -45,9 +48,23 @@ export default function HeroSection() {
               animate={{ opacity: 1 }}
               className="mb-4"
             >
-              <pre className="text-terminal-green text-glow-strong text-xs leading-tight mb-2">
-                {ASCII_LOGO}
-              </pre>
+              {showAscii ? (
+                <pre className="text-terminal-green text-glow-strong text-xs leading-tight mb-2">
+                  {ASCII_LOGO}
+                </pre>
+              ) : (
+                <h1
+                  className="font-mono font-black text-terminal-green my-3 select-none"
+                  style={{
+                    fontSize: "clamp(2.5rem, 8vw, 4.5rem)",
+                    letterSpacing: "-0.02em",
+                    lineHeight: 1,
+                  }}
+                >
+                  <span className="inline-block">APOORV</span>
+                  <span className="ml-1 text-terminal-amber">_</span>
+                </h1>
+              )}
               <p className="text-terminal-text">
                 Software Engineer / Django Software Foundation Member / OSS Contributor
               </p>

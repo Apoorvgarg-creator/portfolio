@@ -9,13 +9,13 @@ export const SITE_CONFIG = {
 };
 
 export const NAV_ITEMS: NavItem[] = [
-  { label: "~/home", href: "#hero" },
-  { label: "~/about", href: "#about" },
-  { label: "~/projects", href: "#projects" },
-  { label: "~/events", href: "#events" },
-  { label: "~/blog", href: "#blog" },
-  { label: "~/book", href: "#book" },
-  { label: "~/social", href: "#social" },
+  { label: "~/home", href: "/#hero" },
+  { label: "~/about", href: "/#about" },
+  { label: "~/projects", href: "/#projects" },
+  { label: "~/events", href: "/#events" },
+  { label: "~/blog", href: "/#blog" },
+  { label: "~/book", href: "/#book" },
+  { label: "~/social", href: "/#social" },
 ];
 
 export const SOCIAL_LINKS: SocialLink[] = [
@@ -45,8 +45,8 @@ export const SOCIAL_LINKS: SocialLink[] = [
   },
   {
     label: "Email",
-    command: "mail apoorvgarg.ms@gmail.com",
-    url: "mailto:apoorvgarg.ms@gmail.com",
+    command: "mail apoorv.portfolio@gmail.com",
+    url: "mailto:apoorv.portfolio@gmail.com",
     icon: "@",
   },
 ];

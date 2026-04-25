@@ -10,12 +10,12 @@ const config: Config = {
     extend: {
       colors: {
         terminal: {
-          black: "#000000",
-          text: "#e0e0e0",
-          green: "#00ff41",
-          amber: "#ffb000",
-          dim: "#555555",
-          border: "#333333",
+          black: "rgb(var(--terminal-black-rgb) / <alpha-value>)",
+          text: "rgb(var(--terminal-text-rgb) / <alpha-value>)",
+          green: "rgb(var(--terminal-green-rgb) / <alpha-value>)",
+          amber: "rgb(var(--terminal-amber-rgb) / <alpha-value>)",
+          dim: "rgb(var(--terminal-dim-rgb) / <alpha-value>)",
+          border: "rgb(var(--terminal-border-rgb) / <alpha-value>)",
         },
       },
       fontFamily: {

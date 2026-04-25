@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useUI } from "@/components/theme/ThemeProvider";
 
 const HELP_TEXT = `Available commands:
   help          Show this message
@@ -19,7 +20,7 @@ OSS Contributor & Maintainer
 Speaker, Author, Streamer`;
 
 export default function InteractiveShell() {
-  const [isOpen, setIsOpen] = useState(false);
+  const { shellOpen: isOpen, setShellOpen: setIsOpen } = useUI();
   const [history, setHistory] = useState<{ command: string; output: string }[]>(
     []
   );
@@ -74,19 +75,19 @@ export default function InteractiveShell() {
       }
       setInput("");
     },
-    [input, processCommand]
+    [input, processCommand, setIsOpen]
   );
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (e.ctrlKey && e.key === "\\") {
         e.preventDefault();
-        setIsOpen((prev) => !prev);
+        setIsOpen(!isOpen);
       }
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
-  }, []);
+  }, [isOpen, setIsOpen]);
 
   useEffect(() => {
     if (isOpen) inputRef.current?.focus();

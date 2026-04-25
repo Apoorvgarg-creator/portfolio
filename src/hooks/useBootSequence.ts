@@ -9,8 +9,13 @@ export function useBootSequence() {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
+    // The terminal boot is a green-on-black phosphor intro; in seasonal
+    // mode the colors clash and the metaphor doesn't fit. Skip it.
+    const isSeasonal =
+      document.documentElement.getAttribute("data-theme") === "seasonal";
+
     const hasBooted = sessionStorage.getItem("boot-complete");
-    if (hasBooted) {
+    if (hasBooted || isSeasonal) {
       setBootComplete(true);
       return;
     }
