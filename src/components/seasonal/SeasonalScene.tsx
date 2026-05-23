@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { usePathname } from "next/navigation";
 import { useTheme } from "@/components/theme/ThemeProvider";
 
 // Lazy-load each scene; they're heavy with rAF + canvas.
@@ -22,6 +23,11 @@ const AllScene = dynamic(() => import("./scenes/AllScene"), {
 
 export default function SeasonalScene() {
   const { mode, season, mounted } = useTheme();
+  const pathname = usePathname();
+
+  // Creator route has its own pirate-samurai surface — kill seasonal scene
+  // entirely (visual scene, mascot, AND the floating wave-pause portal button).
+  if (pathname?.startsWith("/creator")) return null;
 
   if (!mounted || mode !== "seasonal") return null;
 

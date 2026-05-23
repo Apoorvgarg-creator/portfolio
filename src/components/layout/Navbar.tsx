@@ -7,11 +7,13 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useActiveSection } from "@/hooks/useActiveSection";
 import { NAV_ITEMS } from "@/lib/constants";
 import ThemeSwitcher from "@/components/theme/ThemeSwitcher";
+import PortalButton from "@/components/portal/PortalButton";
 
 export default function Navbar() {
   const active = useActiveSection();
   const pathname = usePathname();
   const onHome = pathname === "/";
+  const onCreator = pathname?.startsWith("/creator");
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
@@ -21,31 +23,35 @@ export default function Navbar() {
           href="/#hero"
           className="text-terminal-green text-glow font-bold text-sm"
         >
-          apoorv@portfolio:~$
+          {onCreator ? "nihonkratos@creator:~$" : "apoorv@portfolio:~$"}
         </Link>
 
         {/* Desktop */}
         <div className="hidden md:flex items-center gap-1 flex-1 justify-center">
-          {NAV_ITEMS.map((item) => {
-            const sectionId = item.href.replace("/#", "");
-            const isActive = onHome && active === sectionId;
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`px-3 py-1 text-xs transition-colors ${
-                  isActive
-                    ? "text-terminal-green text-glow"
-                    : "text-terminal-dim hover:text-terminal-text"
-                }`}
-              >
-                {item.label}
-              </Link>
-            );
-          })}
+          {!onCreator &&
+            NAV_ITEMS.map((item) => {
+              const sectionId = item.href.replace("/#", "");
+              const isActive = onHome && active === sectionId;
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`px-3 py-1 text-xs transition-colors ${
+                    isActive
+                      ? "text-terminal-green text-glow"
+                      : "text-terminal-dim hover:text-terminal-text"
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
         </div>
 
-        <ThemeSwitcher variant="desktop" />
+        <div className="hidden md:flex items-center gap-2">
+          <PortalButton variant="desktop" />
+          {!onCreator && <ThemeSwitcher variant="desktop" />}
+        </div>
 
         {/* Mobile toggle */}
         <button
@@ -68,20 +74,23 @@ export default function Navbar() {
             className="md:hidden border-t border-terminal-border overflow-hidden"
           >
             <div className="px-4 py-3 space-y-3">
-              <div className="space-y-1">
-                {NAV_ITEMS.map((item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    onClick={() => setMobileOpen(false)}
-                    className="block text-xs text-terminal-dim hover:text-terminal-green py-1"
-                  >
-                    {item.label}
-                  </Link>
-                ))}
-              </div>
-              <div className="pt-2 border-t border-terminal-border">
-                <ThemeSwitcher variant="mobile" />
+              {!onCreator && (
+                <div className="space-y-1">
+                  {NAV_ITEMS.map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={() => setMobileOpen(false)}
+                      className="block text-xs text-terminal-dim hover:text-terminal-green py-1"
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
+              <div className="pt-2 border-t border-terminal-border space-y-3">
+                <PortalButton variant="mobile" />
+                {!onCreator && <ThemeSwitcher variant="mobile" />}
               </div>
             </div>
           </motion.div>

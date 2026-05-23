@@ -5,7 +5,7 @@ export const SITE_CONFIG = {
   title: "Apoorv Garg — Software Engineer",
   description:
     "Software engineer, Django Software Foundation member, and open source contributor.",
-  url: "https://apoorv.dev",
+  url: "https://apoorvgarg.in",
 };
 
 export const NAV_ITEMS: NavItem[] = [

@@ -5,14 +5,18 @@ import { motion } from "framer-motion";
 // Two parallax wave layers that animate horizontally at different speeds.
 // Each layer is a wide SVG path repeated via translateX from 0 to -50%
 // (the path is 200% width and tiled by repeating its shape).
-export default function Waves() {
+export default function Waves({ paused = false }: { paused?: boolean }) {
   return (
     <div className="absolute bottom-0 left-0 right-0 h-[28vh] overflow-hidden pointer-events-none">
       {/* Back layer */}
       <motion.div
         className="absolute bottom-0 left-0 w-[200%] h-full"
-        animate={{ x: ["0%", "-50%"] }}
-        transition={{ duration: 22, repeat: Infinity, ease: "linear" }}
+        animate={paused ? { x: "0%" } : { x: ["0%", "-50%"] }}
+        transition={
+          paused
+            ? { duration: 0 }
+            : { duration: 22, repeat: Infinity, ease: "linear" }
+        }
       >
         <svg
           viewBox="0 0 1600 200"
@@ -31,8 +35,12 @@ export default function Waves() {
       {/* Front layer */}
       <motion.div
         className="absolute bottom-0 left-0 w-[200%] h-full"
-        animate={{ x: ["0%", "-50%"] }}
-        transition={{ duration: 14, repeat: Infinity, ease: "linear" }}
+        animate={paused ? { x: "0%" } : { x: ["0%", "-50%"] }}
+        transition={
+          paused
+            ? { duration: 0 }
+            : { duration: 14, repeat: Infinity, ease: "linear" }
+        }
       >
         <svg
           viewBox="0 0 1600 200"

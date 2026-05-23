@@ -1,12 +1,17 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { useTheme } from "@/components/theme/ThemeProvider";
 
 export default function CRTOverlay() {
   const { mode, mounted } = useTheme();
+  const pathname = usePathname();
+  const onCreator = pathname?.startsWith("/creator");
+
+  // Suppress CRT chrome on the creator route — pirate-samurai aesthetic isn't phosphor.
+  if (onCreator) return null;
 
   // After hydration, suppress the CRT chrome in seasonal mode.
-  // Before hydration, render normally so terminal-default SSR matches first paint.
   if (mounted && mode !== "terminal") return null;
 
   return (

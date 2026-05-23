@@ -55,7 +55,9 @@ export default function ThemeSwitcher({
             setMode(isSeasonal ? "terminal" : "seasonal");
           }
         }}
-        className="relative inline-flex items-center text-[10px] uppercase tracking-wider rounded-full border border-terminal-border bg-terminal-black/40 select-none cursor-pointer"
+        className={`relative inline-flex items-center text-[10px] uppercase tracking-wider rounded-full border border-terminal-border bg-terminal-black/40 select-none cursor-pointer ${
+          variant === "mobile" ? "self-start" : ""
+        }`}
       >
         <motion.div
           layout

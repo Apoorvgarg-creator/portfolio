@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import Mascot from "@/components/seasonal/mascot/Mascot";
 import SummerCostume from "@/components/seasonal/mascot/costumes/SummerCostume";
@@ -89,7 +90,13 @@ export default function SummerScene() {
   const [mascotState, setMascotState] = useState<MascotState>("sunbathe");
   const [castleStage, setCastleStage] = useState<0 | 1 | 2 | 3>(0);
   const [wavesPaused, setWavesPaused] = useState(false);
+  const [portalReady, setPortalReady] = useState(false);
   const { shellOpen } = useUI();
+
+  // Portal target is only available after mount (client-side).
+  useEffect(() => {
+    setPortalReady(true);
+  }, []);
 
   // Hydrate the pause preference from localStorage on mount
   useEffect(() => {
@@ -164,50 +171,56 @@ export default function SummerScene() {
         />
       </div>
 
-      <Waves />
+      <Waves paused={wavesPaused} />
       <SplashOverlay paused={wavesPaused} />
 
-      {/* Pause-the-wave toggle — fixed top-right under the navbar */}
-      <button
-        type="button"
-        onClick={() => setWavesPaused((p) => !p)}
-        aria-pressed={wavesPaused}
-        aria-label={
-          wavesPaused
-            ? "Resume the wave splash event"
-            : "Stop the wave splash event"
-        }
-        className="fixed right-3 z-30 pointer-events-auto flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-mono backdrop-blur-md border transition-colors bg-terminal-black/40 border-terminal-border text-terminal-text hover:border-terminal-green/60 hover:text-terminal-green"
-        style={{ top: "calc(48px + 12px)" }}
-      >
-        <AnimatePresence mode="wait" initial={false}>
-          {wavesPaused ? (
-            <motion.span
-              key="resume"
-              initial={{ opacity: 0, x: -4 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 4 }}
-              transition={{ duration: 0.15 }}
-              className="flex items-center gap-1.5"
-            >
-              <span aria-hidden="true">▶</span>
-              <span>Resume waves</span>
-            </motion.span>
-          ) : (
-            <motion.span
-              key="pause"
-              initial={{ opacity: 0, x: -4 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 4 }}
-              transition={{ duration: 0.15 }}
-              className="flex items-center gap-1.5"
-            >
-              <span aria-hidden="true">🌊</span>
-              <span>Stop waves</span>
-            </motion.span>
-          )}
-        </AnimatePresence>
-      </button>
+      {/* Pause-the-wave toggle — rendered via portal to escape the
+          aria-hidden, pointer-events:none, z-index:5 seasonal-scene-root
+          stacking context so it can receive clicks above <main>. */}
+      {portalReady &&
+        createPortal(
+          <button
+            type="button"
+            onClick={() => setWavesPaused((p) => !p)}
+            aria-pressed={wavesPaused}
+            aria-label={
+              wavesPaused
+                ? "Resume the wave splash event"
+                : "Stop the wave splash event"
+            }
+            className="fixed right-3 z-30 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-mono backdrop-blur-md border transition-colors bg-terminal-black/40 border-terminal-border text-terminal-text hover:border-terminal-green/60 hover:text-terminal-green"
+            style={{ top: "calc(48px + 12px)" }}
+          >
+            <AnimatePresence mode="wait" initial={false}>
+              {wavesPaused ? (
+                <motion.span
+                  key="resume"
+                  initial={{ opacity: 0, x: -4 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 4 }}
+                  transition={{ duration: 0.15 }}
+                  className="flex items-center gap-1.5"
+                >
+                  <span aria-hidden="true">▶</span>
+                  <span>Resume waves</span>
+                </motion.span>
+              ) : (
+                <motion.span
+                  key="pause"
+                  initial={{ opacity: 0, x: -4 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 4 }}
+                  transition={{ duration: 0.15 }}
+                  className="flex items-center gap-1.5"
+                >
+                  <span aria-hidden="true">🌊</span>
+                  <span>Stop waves</span>
+                </motion.span>
+              )}
+            </AnimatePresence>
+          </button>,
+          document.body
+        )}
 
       {!shellOpen && (
         <Mascot

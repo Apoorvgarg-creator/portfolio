@@ -1,4 +1,11 @@
+"use client";
+
+import { usePathname } from "next/navigation";
+
 export default function Footer() {
+  const pathname = usePathname();
+  if (pathname?.startsWith("/creator")) return null;
+
   return (
     <footer className="border-t border-terminal-border py-8 px-4 text-center">
       <pre className="text-terminal-dim text-xs leading-tight mb-4 hidden sm:block">
